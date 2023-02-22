@@ -23,6 +23,10 @@ public class CommonRequestWrapper extends HttpServletRequestWrapper {
 		
 		// 로그인 상태 
 		request.setAttribute("isLogin", MemberLibrary.isLogin(request));
+		
+		// 관리자 여부
+		request.setAttribute("isAdmin", MemberLibrary.isAdmin(request));
+		
 	}
 	/**
 	@Override

@@ -30,4 +30,19 @@ public class MemberLibrary {
 		
 		return member;
 	}
+	
+	/**
+	 * 관리자 여부 체크 
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public static boolean isAdmin(HttpServletRequest request) {
+		Member member = getLoginMember(request);
+		if (member != null && member.getUserType().equals("ADMIN")) { // 관리자 회원인 경우
+			return true;
+		}
+			
+		return false;
+	}
 }

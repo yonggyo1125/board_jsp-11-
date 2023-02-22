@@ -22,6 +22,10 @@
 				<a href="<c:url value='/member/logout' />">
 					<fmt:message key="member.logout" />
 				</a>
+				
+				<c:if test="${isAdmin}">
+					<a href="<c:url value='/admin' />"><i class='xi-cog'></i> 게시판관리</a>
+				</c:if>
 			</c:if>
 			<c:if test="${!isLogin}">
 				<a href="<c:url value='/member/login' />">
