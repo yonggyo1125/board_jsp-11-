@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BoardConfigMapper">
+	<resultMap id="boardConfigMap" type="models.board.BoardConfig">
+		<result property="id" column="id" />
+		<result property="boardNm" column="boardNm" />
+		<result property="isUse" column="isUse" />
+		<result property="useEditor" column="useEditor" />
+		<result property="attachFileType" column="attachFileType" />
+		<result property="postsPerPage" column="postsPerPage" />
+		<result property="pageRanges" column="pageRanges" />
+		<result property="useComment" column="useComment" />
+		<result property="topHtml" column="topHtml" />
+		<result property="bottomHtml" column="bottomHtml" />
+		<result property="regDt" column="regDt" />
+		<result property="modDt" column="modDt" />
+	</resultMap>
+	
+	<select id="configs" parameterType="models.board.BoardConfig" resultMap="boardConfigMap">
+		SELECT * FROM boardConfig 
+		<trim prefix="WHERE" suffixOverrides="AND | OR">
+			<if test="id != null">
+				id LIKE #{id} AND 
+			</if>
+			<if test="boardNm != null">
+				boardNm LIKE #{boardNm} AND
+			</if>
+		</trim>
+		ORDER BY regDt DESC;
+	</select>
+	
+	<select id="config" parameterType="models.board.BoardConfig" resultMap="boardConfigMap">
+		SELECT * FROM boardConfig WHERE id=#{id};
+	</select>
+ 	
+	<select id="count" parameterType="models.board.BoardConfig" resultType="int">
+		SELECT COUNT(*) FROM boardConfig WHERE id=#{id};
+	</select>
+	
+	<insert id="insert" parameterType="models.board.BoardConfig">
+		INSERT INTO boardConfig 
+			(id, boardNm, isUse, useEditor, attachFileType, postsPerPage, pageRanges, useComment, topHtml, bottomHtml)
+			VALUES (#{id}, #{boardNm}, #{isUse}, #{useEditor}, #{attachFileType}, #{postsPerPage}, #{pageRanges}, #{useComment}, #{topHtml}, #{bottomHtml});
+	</insert>
+	
+	<update id="update" parameterType="models.board.BoardConfig">
+		UPDATE boardConfig
+			SET 
+				boardNm=#{boardNm},
+				isUse=#{isUse},
+				useEditor=#{useEditor},
+				attachFileType=#{attachFileType},
+				postsPerPage=#{postsPerPage},
+				pageRanges=#{pageRanges},
+				useComment=#{useComment},
+				topHtml=#{topHtml},
+				bottomHtml=#{bottomHtml},
+				modDt=NOW()
+			WHERE id=#{id};
+	</update>
+	
+	<delete id="delete" parameterType="models.board.BoardConfig">
+		DELETE FROM boardConfig WHERE id=#{id};
+	</delete>
+</mapper>
+
+

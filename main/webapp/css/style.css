@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+* { color: #000; box-sizing: border-box; outline: none; font-family: 'Noto Sans KR', sans-serif; }
+body { margin: 0; }
+html { font-size: 13px; }
+ul, ol { list-style: none; padding:0; margin: 0;} 
+dl,dt,dd, p { padding: 0; margin: 0; }
+img { border: 0; }
+a { text-decoration: none; }
+
+
+/** 공통 */
+.layout_width { max-width: 1300px; min-width: 1100px; margin: 0 auto; }
+.dn { display: none !important; }
+
+
