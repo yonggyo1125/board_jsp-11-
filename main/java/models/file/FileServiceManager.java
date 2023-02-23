@@ -12,7 +12,7 @@ public class FileServiceManager {
 	}
 	
 	public FileUploadService getFileUploadService() {
-		return new FileUploadService(fileInfoDao(), null);
+		return new FileUploadService(fileInfoDao());
 	}
 	
 	public FileDeleteService getFileDeleteService() {
