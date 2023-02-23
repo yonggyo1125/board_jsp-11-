@@ -6,3 +6,8 @@ CREATE TABLE fileInfo (
     regDt DATETIME DEFAULT NOW() COMMENT '파일 업로드 일시',
     PRIMARY KEY(id)
 );
+
+ALTER TABLE fileInfo ADD userNo INT AFTER id;
+
+ALTER TABLE fileInfo ADD FOREIGN KEY(userNo)
+	REFERENCES member(userNo);

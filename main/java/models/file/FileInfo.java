@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class FileInfo {
 	private int id; // 파일 등록번호
+	private int userNo; // 회원번호
 	private String gid; // 그룹 ID
 	private String fileName; // 원본 파일명
 	private String fileType; // 파일 종류
@@ -17,6 +18,14 @@ public class FileInfo {
 		this.id = id;
 	}
 	
+	public int getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
+	}
+
 	public String getGid() {
 		return gid;
 	}
@@ -51,8 +60,8 @@ public class FileInfo {
 
 	@Override
 	public String toString() {
-		return "FileInfo [id=" + id + ", gid=" + gid + ", fileName=" + fileName + ", fileType=" + fileType + ", regDt="
-				+ regDt + "]";
+		return "FileInfo [id=" + id + ", userNo=" + userNo + ", gid=" + gid + ", fileName=" + fileName + ", fileType="
+				+ fileType + ", regDt=" + regDt + "]";
 	}
 	
 }
