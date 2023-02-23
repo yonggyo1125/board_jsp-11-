@@ -14,9 +14,9 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-
+import commons.MemberLibrary;
 import commons.PropertyLibrary;
-import commons.validator.Validator;
+import models.member.Member;
 
 public class FileUploadService {
 	
@@ -97,6 +97,9 @@ public class FileUploadService {
 		}
 		
 		// 4. 파일 형식을 제한한 경우 E
+		
+		Member member = MemberLibrary.getLoginMember(request); //  로그인한 회원정보
+		
 		String gid = requestData.get("gid");
 		if (gid == null) gid = "" + System.currentTimeMillis(); // 그룹ID 없으면 임의의 수
 		
@@ -110,6 +113,9 @@ public class FileUploadService {
 			fileInfo.setFileName(fileName);
 			fileInfo.setFileType(item.getContentType());
 			fileInfo.setGid(gid);
+			if (member != null) { // 회원 파일 업로드인 경우는 회원번호를 업데이트
+				fileInfo.setUserNo(member.getUserNo());
+			}
 			
 			boolean result = fileInfoDao.insert(fileInfo);
 			if (!result) { // DB 추가 실패한 경우는 파일 처리 건너뛰기 

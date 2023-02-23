@@ -3,6 +3,7 @@
 <mapper namespace="FileInfoMapper">
 	<resultMap id="FileInfoMap" type="models.file.FileInfo">
 		<result property="id" column="id" />
+		<result property="userNo" column="userNo" />
 		<result property="gid" column="gid" />
 		<result property="fileName" column="fileName" />
 		<result property="fileType" column="fileType" />
@@ -16,8 +17,8 @@
 		SELECT * FROM fileInfo WHERE id=#{id};
 	</select>
 	<insert id="insert" parameterType="models.file.FileInfo" keyProperty="id" useGeneratedKeys="true">
-		INSERT INTO fileInfo (gid, fileName, fileType) 
-			VALUES (#{gid}, #{fileName}, #{fileType});
+		INSERT INTO fileInfo (userNo, gid, fileName, fileType) 
+			VALUES (#{userNo}, #{gid}, #{fileName}, #{fileType});
 	</insert>
 	<delete id="delete" parameterType="models.file.FileInfo">
 		DELETE FROM fileInfo WHERE id=#{id};

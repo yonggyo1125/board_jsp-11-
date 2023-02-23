@@ -16,7 +16,7 @@ public class FileServiceManager {
 	}
 	
 	public FileDeleteService getFileDeleteService() {
-		return new FileDeleteService(fileInfoDao(), null);
+		return new FileDeleteService(fileInfoDao());
 	}
 	
 	public FileListService getFileListService() {
