@@ -1,7 +1,7 @@
 package models.file;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
@@ -29,7 +28,7 @@ public class FileUploadService {
 		this.validator = validator;
 	}
 	
-	public List<FileInfo> upload(HttpServletRequest request) throws FileUploadException, UnsupportedEncodingException {
+	public List<FileInfo> upload(HttpServletRequest request) throws Exception {
 		/**
 		 * 1. 요청 데이터(Multipart body) 분리 
 		 * 		 List<FileItem> ServletFileUpload :: parseRequest
@@ -101,7 +100,10 @@ public class FileUploadService {
 		
 		// 4. 파일 형식을 제한한 경우 E
 		String gid = requestData.get("gid");
+		String uploadPath = request.getServletContext().getRealPath(".") + File.separator + "uploads" + File.separator;
 		if (gid == null) gid = "" + System.currentTimeMillis(); // 그룹ID 없으면 임의의 수
+		
+		List<FileInfo> successFiles = new ArrayList<>(); // 파일 업로드 처리 성공 목록  
 		for (FileItem item : items) {
 			// 5. 파일이 O, DB에 파일 정보 기록(fileInfo) S
 			String fileName = item.getName();
@@ -116,6 +118,28 @@ public class FileUploadService {
 				continue;
 			}
 			// 5. 파일이 O, DB에 파일 정보 기록(fileInfo) E
+			
+			// 6. 파일 등록(id)를 가지고 webapp/uploads/[0-9]/id(파일 등록 아이디) 저장
+			try {
+				int id = fileInfo.getId();
+				int folder = id % 10;
+				String filePath = uploadPath + folder + File.separator + id;
+				item.write(new File(filePath));
+			} catch (IOException e) {
+				e.printStackTrace();
+				continue;
+			}
+			
+			// 7. 등록 성공한 파일만 업로드 한 파일 목록으로 추가 
+			successFiles.add(fileInfo);
 		}
+		
+		// 9. 파일업로드 최종 실패
+		if (successFiles.size() == 0) {
+			throw new FileUploadException("파일 업로드 실패하였습니다.");
+		}
+		
+		// 8. 업로드 성공 파일 목록 반환 
+		return successFiles;
 	}
 }
