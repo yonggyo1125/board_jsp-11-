@@ -22,4 +22,9 @@
 	<delete id="delete" parameterType="models.file.FileInfo">
 		DELETE FROM fileInfo WHERE id=#{id};
 	</delete>
+	
+	<delete id="deletes" parameterType="models.file.FileInfo">
+		DELETE FROM fileInfo WHERE gid=#{gid};
+	</delete>
+	
 </mapper>
