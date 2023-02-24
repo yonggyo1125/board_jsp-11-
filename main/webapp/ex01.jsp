@@ -3,6 +3,6 @@
 
 <form method="post" action="<c:url value='/file/upload' />" enctype="multipart/form-data">
 	<input type="hidden" name="gid" value="testgid">
-	<input type="file" name="file">
+	<input type="file" name="file" multiple>
 	<button type="submit">업로드</button>
 </form>
