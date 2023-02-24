@@ -26,7 +26,7 @@ public class FileDeleteService {
 		 * 		- id, gid 둘다 있는 경우 id로 삭제
 		 * 
 		 * 2. 파일조회(id), 파일 목록(gid) 조회 -> 형식을 통일화 id로 조회한 파일도 List 형태로 변환
-		    2.5. 조회된 파일이 없는 경우 -> FileNotFoundException
+		    2.5. 조회된 파일이 없는 경우 -> FileInfoNotFoundException
 		 * 3. 삭제 파일 중에서 회원이 업로드한 경우 권한 체크 
 		 * 			-> 로그인 한 회원과 일치하는 경우만 삭제 가능
 		 * 			-> 관리자인 경우는 무조건 삭제 가능
