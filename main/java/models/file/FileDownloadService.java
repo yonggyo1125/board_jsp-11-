@@ -1,7 +1,11 @@
 package models.file;
 
+import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.UnsupportedEncodingException;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;import java.text.Bidi;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -67,6 +71,25 @@ public class FileDownloadService {
 		
 		// 윈도우즈 인경우는 한글 인코딩이 2바이트 CPC949(EUC-KR) 
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+		response.setHeader("Content-Type", "application/octet-stream");
+		response.setIntHeader("Expires", 0);
+		response.setHeader("Cache-Control", "must-revalidate");
+		response.setHeader("Pragma", "public");
+		response.setHeader("Content-Length", ""+file.length());
+		
+		// 5. body쪽에 파일 데이터를 읽어서 출력
+		try (FileInputStream fis = new FileInputStream(file);
+			   BufferedInputStream bis = new BufferedInputStream(fis)) {
+			
+			OutputStream os = response.getOutputStream(); 
+			int i = 0;
+			while ((i = bis.read()) != -1) {
+				os.write(i);
+			}
+			os.flush(); // 버퍼 비우기 
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 }
