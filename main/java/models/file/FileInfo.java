@@ -1,6 +1,9 @@
 package models.file;
 
+import java.io.File;
 import java.time.LocalDateTime;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class FileInfo {
 	private int id; // 파일 등록번호
@@ -57,7 +60,29 @@ public class FileInfo {
 	public void setRegDt(LocalDateTime regDt) {
 		this.regDt = regDt;
 	}
-
+	
+	
+	/**
+	 * 실제 업로드된 파일 경로 
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public String getFilePath(HttpServletRequest request) {
+		int folder = id % 10;
+		
+		StringBuffer sb = new StringBuffer(150);
+		sb.append(request.getServletContext().getRealPath("."));
+		sb.append(File.separator);
+		sb.append("uploads");
+		sb.append(File.separator);
+		sb.append(folder);
+		sb.append(File.separator);
+		sb.append(id);
+		
+		return sb.toString();
+	}
+	
 	@Override
 	public String toString() {
 		return "FileInfo [id=" + id + ", userNo=" + userNo + ", gid=" + gid + ", fileName=" + fileName + ", fileType="

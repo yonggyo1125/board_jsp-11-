@@ -5,10 +5,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import commons.MemberLibrary;
 import commons.exception.BadRequestException;
-import commons.validator.RequiredValidator;
+import models.member.Member;
 
-public class FileDeleteService implements RequiredValidator {
+public class FileDeleteService {
 	private FileInfoDao fileInfoDao; 
 	
 	public FileDeleteService(FileInfoDao fileInfoDao) {
@@ -36,8 +37,11 @@ public class FileDeleteService implements RequiredValidator {
 		//  1. 필수 항목 체크 S
 		String _id = request.getParameter("id");
 		String gid = request.getParameter("gid");
-		checkRequired(_id, new BadRequestException());
-		checkRequired(gid, new BadRequestException());
+		
+		// 둘다 없는 경우는 예외 발생
+		if ((_id == null || _id.isBlank()) && (gid == null || gid.isBlank())) {
+			throw new BadRequestException();
+		}
 		//  1. 필수 항목 체크 E
 		
 		// 2. 파일조회(id), 파일 목록(gid) 조회 S 
@@ -57,5 +61,23 @@ public class FileDeleteService implements RequiredValidator {
 			throw new FileInfoNotFoundException();
 		}
 		
+		// 3. 삭제 파일 중에서 회원이 업로드한 경우 권한 체크 - 사용자와 관리자 
+		for (FileInfo file : files) {
+			int userNo = file.getUserNo();
+			
+			// 회원이 올린 파일이고 현재 로그인한 회원이 관리자가 아닐때
+			if (userNo > 0 && !MemberLibrary.isAdmin(request)) {
+				Member member = MemberLibrary.getLoginMember(request);
+				if (member == null || member.getUserNo() != userNo) {
+					throw new BadRequestException("본인이 업로드한 파일만 삭제가능합니다.");
+				}
+			}
+		}
+		
+		// 4. 파일 삭제 - 파일 DB 삭제, 실제 파일 삭제 
+		for(FileInfo file : files) {
+			fileInfoDao.delete(file.getId()); // DB 삭제 
+			
+		}
 	}
 }

@@ -127,6 +127,13 @@ public class FileUploadService {
 			try {
 				int id = fileInfo.getId();
 				int folder = id % 10;
+				
+				// 폴더 X -> 생성
+				File folderPath = new File(uploadPath + folder);
+				if (!folderPath.exists()) {
+					folderPath.mkdir();
+				}
+				
 				String filePath = uploadPath + folder + File.separator + id;
 				item.write(new File(filePath));
 			} catch (IOException e) {
