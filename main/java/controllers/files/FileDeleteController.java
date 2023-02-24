@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import models.file.FileDeleteService;
 import models.file.FileServiceManager;
 
-@WebServlet("/file/delete/*")
+@WebServlet("/file/delete")
 public class FileDeleteController extends HttpServlet {
 
 	@Override

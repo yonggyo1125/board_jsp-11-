@@ -11,3 +11,6 @@ ALTER TABLE fileInfo ADD userNo INT AFTER id;
 
 ALTER TABLE fileInfo ADD FOREIGN KEY(userNo)
 	REFERENCES member(userNo);
+	
+	
+ALTER TABLE fileInfo DROP CONSTRAINT fileinfo_ibfk_1;
