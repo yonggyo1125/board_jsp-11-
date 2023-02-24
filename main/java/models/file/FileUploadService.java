@@ -88,7 +88,7 @@ public class FileUploadService {
 		// 4. 파일 형식을 제한한 경우 S // image  -> image/*
 		String fileType = requestData.get("fileType"); 
 		if (fileType != null) {
-			for (FileItem item : items) {
+			for (FileItem item : uploadedFiles) {
 				String type = item.getContentType();
 				if (type.indexOf(fileType) == -1) { // fileType에 해당하지 않는 파일이 포함된 경우 
 					throw new NotAllowedFileTypeException();
@@ -99,15 +99,15 @@ public class FileUploadService {
 		// 4. 파일 형식을 제한한 경우 E
 		
 		Member member = MemberLibrary.getLoginMember(request); //  로그인한 회원정보
-		
 		String gid = requestData.get("gid");
 		if (gid == null) gid = "" + System.currentTimeMillis(); // 그룹ID 없으면 임의의 수
 		
 		String uploadPath = request.getServletContext().getRealPath(".") + File.separator + "uploads" + File.separator;
 		List<FileInfo> successFiles = new ArrayList<>(); // 파일 업로드 처리 성공 목록  
-		for (FileItem item : items) {
+		for (FileItem item : uploadedFiles) {
 			// 5. 파일이 O, DB에 파일 정보 기록(fileInfo) S
 			String fileName = item.getName();
+			System.out.println("fileName : " + fileName);
 			fileName = fileName.substring(fileName.lastIndexOf(File.separator) + 1);
 			FileInfo fileInfo = new FileInfo();
 			fileInfo.setFileName(fileName);
