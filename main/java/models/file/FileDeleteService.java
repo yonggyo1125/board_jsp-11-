@@ -1,5 +1,6 @@
 package models.file;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -78,6 +79,11 @@ public class FileDeleteService {
 		for(FileInfo file : files) {
 			fileInfoDao.delete(file.getId()); // DB 삭제 
 			
+			String path = file.getFilePath(request); // 실제 업로드된 파일 경로
+			File uploadFile = new File(path);
+			if (uploadFile.exists()) { // 파일이 있는 경우 -> 삭제
+				uploadFile.delete();
+			}
 		}
 	}
 }
