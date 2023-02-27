@@ -81,7 +81,38 @@ koreait.fileManager = {
 	 * 목록 조회 
 	 * 
 	 */
-	gets(gid) {},
+	gets(gid) {
+		if (!gid) {
+			return;
+		}
+		
+		const contextPathEl = document.getElementById("contextPath");
+		const contextPath = contextPathEl ? contextPathEl.value : "";
+		const url = `${contextPath}/file/list/${gid}`;
+		
+		return new Promise(function(resolve, reject) {
+			const xhr = new XMLHttpRequest();
+			xhr.open("GET", url);
+			xhr.send(null);
+			
+			xhr.onreadystatechange = function() {
+				if (xhr.status == 200 && xhr.readyState == XMLHttpRequest.DONE) {
+					const result = JSON.parse(xhr.responseText);
+					if (!result.success) { // 실패 
+						reject(result);
+						return;
+					}
+					
+					resolve(result.data); // 성공 
+				}	
+			};
+			
+			xhr.onerror = function(err) {
+				reject(err);	
+			};
+		});
+		
+	},
 	/**
 	 * 파일 목록 삭제
 	 * 
