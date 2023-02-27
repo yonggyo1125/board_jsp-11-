@@ -27,6 +27,10 @@ public class CommonRequestWrapper extends HttpServletRequestWrapper {
 		// 관리자 여부
 		request.setAttribute("isAdmin", MemberLibrary.isAdmin(request));
 		
+		// Context Path 
+		String contextPath = request.getContextPath();
+		request.setAttribute("contextPath", contextPath);
+		
 	}
 	/**
 	@Override

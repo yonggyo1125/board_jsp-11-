@@ -23,8 +23,15 @@ koreait.fileManager = {
 				formData.append("file", file);
 			}
 			
+			let contextPath = "";
+			const contextPathEl = document.getElementById("contextPath");
+			if (contextPathEl) { // 컨텍스트 경로가 있는 경우
+				contextPath = contextPathEl.value;
+			}
+			const url = `${contextPath}/file/upload`;
+			
 			const xhr = new XMLHttpRequest();
-			xhr.open("POST", "/board/file/upload");
+			xhr.open("POST", url);
 			xhr.send(formData);
 			
 			xhr.onreadystatechange = function() {

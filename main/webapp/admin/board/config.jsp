@@ -14,6 +14,7 @@
 	</div>
 	
 	<form name="saveFrm" method="post" action="${action}" target="ifrmProcess" autocomplete="off">
+		<input type="hidden" id="contextPath" value="${contextPath}">
 		<table class='table_cols'>
 			<tr>
 				<th>게시판 ID</th>
