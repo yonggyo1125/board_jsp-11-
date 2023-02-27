@@ -88,6 +88,7 @@
 				<td>
 					<textarea id="boardTopHtml" name="topHtml">${boardConfig.topHtml}</textarea>
 					<input type="file" class="fileUpload" data-image-only="1" data-gid="config_topHtml" multiple>
+					<ul id="uploaded_files_top"></ul>
 				</td>
 			</tr>
 			<tr>
@@ -95,6 +96,7 @@
 				<td>
 					<textarea id="boardBottomHtml" name="bottomHtml">${boardConfig.bottomHtml}</textarea>
 					<input type="file" class="fileUpload" data-image-only="1" data-gid="config_bottomHtml" multiple>
+					<ul id="uploaded_files_bottom"></ul>
 				</td>
 			</tr>
 		</table>
@@ -105,4 +107,10 @@
 			</button>
 		</div>
 	</form>
+	<script type="text/html" id="fileTpl">
+		<li>
+			<a href="#downloadUrl#">#fileName#</a>
+			<span class='fileDelete remove' data-id="#id#">[삭제]</span>
+		</li>
+	</script>
 </layout:admin>

@@ -17,14 +17,32 @@ function callbackFileUpload(files) {
 	const contextPathEl = document.getElementById("contextPath");
 	let contextPath = contextPathEl ? contextPathEl.value : "";
 	
+	const uploadedFilesTop = document.getElementById("uploaded_files_top");
+	const uploadedFilesBottom = document.getElementById("uploaded_files_bottom");
+	const fileTpl = document.getElementById("fileTpl").innerHTML; 
+	
+	const domParser = new DOMParser();
 	let topHtml = "", bottomHtml = "";
 	for (const file of files) {
 		const imgTag = `<img src='${contextPath}${file.uploadUrl}'>`;
+		let html = fileTpl;
+		html = html.replace(/#downloadUrl#/g, `${contextPath}/file/download/${file.id}`)
+							.replace(/#fileName#/g, file.fileName)
+							.replace(/#id#/g, file.id);
+							
+		const dom = domParser.parseFromString(html, "text/html");
+		const liEl = dom.querySelector("li");
+		const removeEl = liEl.querySelector(".remove"); // 파일 삭제 클릭시 삭제 처리 
+		removeEl.addEventListener("click", koreait.fileManager.delete);
+		
+		
 		if (file.gid.indexOf("bottomHtml") == -1) { // 상단 에디터
 		 	topHtml += imgTag;
+		 	uploadedFilesTop.appendChild(liEl);
 		 	
 		} else { // 하단 에디터 
 			bottomHtml += imgTag;
+			uploadedFilesBottom.appendChild(liEl);
 		}
 	} // endfor 
 	

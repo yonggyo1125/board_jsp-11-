@@ -62,6 +62,9 @@ koreait.fileManager = {
 					if (typeof callbackFileUpload == 'function') { 
 						callbackFileUpload(data);
 					}
+					
+					// 파일 업로드 태그 초기화
+					el.value = ""; // 선택 해제 
 				}	
 			};
 			
@@ -86,8 +89,43 @@ koreait.fileManager = {
 	deletes(gid) {},
 	/**
 	 * 파일 아이디로 삭제
+	 * 
 	 */
-	delete(id) {}
+	delete(e) {
+		const el = e.currentTarget;
+		const id = el.dataset.id;
+		try {
+			if (!id) {
+				throw new Error("잘못된 접근입니다.");
+			}
+			
+			const contextPathEl = document.getElementById("contextPath");
+			const contextPath = contextPathEl ? contextPathEl.value : "";
+			const url = `${contextPath}/file/delete?id=${id}`;
+			
+			const xhr = new XMLHttpRequest();
+			xhr.open("GET", url);
+			xhr.send(null); // body 출력 데이터 
+			
+			xhr.onreadystatechange = function() {
+				if (xhr.status == 200 && xhr.readyState == XMLHttpRequest.DONE) {
+					const data = JSON.parse(xhr.responseText);
+					if (!data.success) {
+						alert(data.message);
+						return;
+					}
+					
+					// 삭제 완료 -> 파일 목록 HTML 삭제
+					const liEl = el.parentElement; 
+					liEl.parentElement.removeChild(liEl);
+				}	
+			};
+			
+		} catch (err) {
+			alert(err.message);
+			console.error(err);
+		}
+	}
 };
 
 
