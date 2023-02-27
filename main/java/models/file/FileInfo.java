@@ -13,6 +13,8 @@ public class FileInfo {
 	private String fileType; // 파일 종류
 	private LocalDateTime regDt; // 파일 업로드 일시 
 	
+	private String uploadUrl; // 파일 업로드 URL;
+	
 	public int getId() {
 		return id;
 	}
@@ -61,6 +63,12 @@ public class FileInfo {
 		this.regDt = regDt;
 	}
 	
+	
+	public String getUploadUrl() {
+		int folder = id % 10;
+		String url = "/uploads/" + folder + "/" + id;
+		return url;
+	}
 	
 	/**
 	 * 실제 업로드된 파일 경로 

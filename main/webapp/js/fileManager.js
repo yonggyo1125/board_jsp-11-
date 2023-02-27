@@ -50,7 +50,18 @@ koreait.fileManager = {
 			xhr.onreadystatechange = function() {
 				if (xhr.status = 200 && xhr.readyState == XMLHttpRequest.DONE) {
 					// 요청 성공시 
-					const data = JSON.parse(xhr.responseText); // JSON 문자열(JSP 서버) -> JavaScript 객체로 변환
+					const result = JSON.parse(xhr.responseText); // JSON 문자열(JSP 서버) -> JavaScript 객체로 변환
+					if (!result.success) { // 파일 전송 실패 한경우 
+						alert(result.message);
+						return;
+					}
+					
+					// 파일 전송 성공 
+					const data = result.data;
+					// callbackFileUpload 함수가 정의 되어 있는 경우는 이 함수를 호출, data를 넘겨준다.
+					if (typeof callbackFileUpload == 'function') { 
+						callbackFileUpload(data);
+					}
 				}	
 			};
 			
