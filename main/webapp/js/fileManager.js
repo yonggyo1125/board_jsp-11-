@@ -86,7 +86,30 @@ koreait.fileManager = {
 	 * 파일 목록 삭제
 	 * 
 	 */
-	deletes(gid) {},
+	deletes(gid) {
+		if (!gid) {
+			return;
+		}
+		
+		const contextPathEl = document.getElementById("contextPath");
+		const contextPath = contextPathEl ? contextPathEl.value : "";
+		const url = `${contextPath}/file/delete?gid=${gid}`;
+		const xhr = new XMLHttpRequest();
+		xhr.open("GET", url);
+		xhr.onreadystatechange = function() {
+			if (xhr.status == 200 && xhr.readyState == XMLHttpRequest.DONE) {
+				const data = JSON.parse(xhr.responseText);
+				if (!data.success) {
+					alert(data.message);
+					return;
+				}
+				
+				if (typeof callbackFileDelete == 'function') {
+					callbackFileDelete(data);
+				}
+			}	
+		};
+	},
 	/**
 	 * 파일 아이디로 삭제
 	 * 
@@ -134,13 +157,24 @@ koreait.fileManager = {
 };
 
 
-/**
- * fileUpload 클래스가 있는 경우는 파일 업로드 처리 
- */
+
 window.addEventListener("DOMContentLoaded", function() {
+	
+	/**
+ 	* fileUpload 클래스가 있는 경우는 파일 업로드 처리 
+ 	*/
 	const fileUploads = document.getElementsByClassName("fileUpload");
 	for (const el of fileUploads) {
 		el.addEventListener("change", koreait.fileManager.upload);
+	}
+	
+	/**
+	 * fileDelete 클래스가 있는 경우 파일 삭제 처리 
+	 * 
+	 */
+	const fileDeletes = document.getElementsByClassName("fileDelete");
+	for (const el of fileDeletes) {
+		el.addEventListener("click", koreait.fileManager.delete);
 	}
 });
 
