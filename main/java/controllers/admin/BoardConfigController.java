@@ -26,7 +26,7 @@ public class BoardConfigController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String[] addScript = { "ckeditor/ckeditor", "admin/config" }; 
+		String[] addScript = { "fileManager", "ckeditor/ckeditor", "admin/config" }; 
 		req.setAttribute("menuCode", "boardRegister");
 		req.setAttribute("addScript", addScript);
 		
