@@ -87,14 +87,14 @@
 				<th>목록 상단</th>
 				<td>
 					<textarea id="boardTopHtml" name="topHtml">${boardConfig.topHtml}</textarea>
-					<input type="file" class="fileUpload" data-gid="config_topHtml" multiple>
+					<input type="file" class="fileUpload" data-image-only="1" data-gid="config_topHtml" multiple>
 				</td>
 			</tr>
 			<tr>
 				<th>목록 하단</th>
 				<td>
 					<textarea id="boardBottomHtml" name="bottomHtml">${boardConfig.bottomHtml}</textarea>
-					<input type="file" class="fileUpload" data-gid="config_bottomHtml" multiple>
+					<input type="file" class="fileUpload" data-image-only="1" data-gid="config_bottomHtml" multiple>
 				</td>
 			</tr>
 		</table>

@@ -13,8 +13,21 @@ koreait.fileManager = {
 				throw new Error("파일을 업로드 하세요.");
 			}
 			
-			const gid = dataset.gid;
 			const formData = new FormData();
+			
+			const gid = dataset.gid;
+			const imageOnly = dataset.imageOnly?true:false;
+			// 이미지 형식만 허용 체크 
+			if (imageOnly) {
+				for(const file of  files) {
+					if (file.type.indexOf("image") == -1) { //  이미지 이외의 다른 파일이 첨부된 경우 
+						throw new Error("이미지 형식만 업로드 하세요.");
+					}
+				}
+				
+				formData.append("fileType", "image");
+			}
+			
 			if (gid) {
 				formData.append("gid", gid);
 			}
@@ -36,8 +49,13 @@ koreait.fileManager = {
 			
 			xhr.onreadystatechange = function() {
 				if (xhr.status = 200 && xhr.readyState == XMLHttpRequest.DONE) {
-					console.log(xhr.responseText);
+					// 요청 성공시 
+					const data = JSON.parse(xhr.responseText); // JSON 문자열(JSP 서버) -> JavaScript 객체로 변환
 				}	
+			};
+			
+			xhr.onerror = function(err) {
+				console.err(err);
 			};
 			
 		} catch (err) {
