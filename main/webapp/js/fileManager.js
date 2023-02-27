@@ -92,6 +92,7 @@ koreait.fileManager = {
 	 * 
 	 */
 	delete(e) {
+				
 		const el = e.currentTarget;
 		const id = el.dataset.id;
 		try {
@@ -99,6 +100,10 @@ koreait.fileManager = {
 				throw new Error("잘못된 접근입니다.");
 			}
 			
+			if (!confirm("정말 삭제하시겠습니까?")) {
+				return;
+			}
+				
 			const contextPathEl = document.getElementById("contextPath");
 			const contextPath = contextPathEl ? contextPathEl.value : "";
 			const url = `${contextPath}/file/delete?id=${id}`;
