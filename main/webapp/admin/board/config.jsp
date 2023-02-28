@@ -15,6 +15,7 @@
 	
 	<form name="saveFrm" method="post" action="${action}" target="ifrmProcess" autocomplete="off">
 		<input type="hidden" id="contextPath" value="${contextPath}">
+		<input type="hidden" name="gid" value="${gid}">
 		<table class='table_cols'>
 			<tr>
 				<th>게시판 ID</th>
@@ -87,7 +88,7 @@
 				<th>목록 상단</th>
 				<td>
 					<textarea id="boardTopHtml" name="topHtml">${boardConfig.topHtml}</textarea>
-					<input type="file" class="fileUpload" data-image-only="1" data-gid="config_topHtml" multiple>
+					<input type="file" class="fileUpload" data-image-only="1" data-gid="${gid}_topHtml" multiple>
 					<ul id="uploaded_files_top"></ul>
 				</td>
 			</tr>
@@ -95,7 +96,8 @@
 				<th>목록 하단</th>
 				<td>
 					<textarea id="boardBottomHtml" name="bottomHtml">${boardConfig.bottomHtml}</textarea>
-					<input type="file" class="fileUpload" data-image-only="1" data-gid="config_bottomHtml" multiple>
+					<input type="file" class="fileUpload" data-image-only="1" 
+							data-gid="${gid}_bottomHtml" multiple>
 					<ul id="uploaded_files_bottom"></ul>
 				</td>
 			</tr>

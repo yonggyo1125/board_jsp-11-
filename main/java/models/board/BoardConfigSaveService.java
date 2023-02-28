@@ -35,6 +35,7 @@ public class BoardConfigSaveService {
 		
 		BoardConfig boardConfig = new BoardConfig();
 		boardConfig.setId(request.getParameter("id"));
+		boardConfig.setGid(request.getParameter("gid"));
 		boardConfig.setBoardNm(request.getParameter("boardNm"));
 		String isUse = request.getParameter("isUse");
 		boardConfig.setIsUse(isUse == null?0:Integer.parseInt(isUse));
@@ -74,9 +75,10 @@ public class BoardConfigSaveService {
 			throw new BoardConfigException("설정 정보 저장에 실패하였습니다.");
 		}
 		
-		// 업로드 파일 완료 처리 
-		fileInfoDao.updateDone("config_topHtml");
-		fileInfoDao.updateDone("config_bottomHtml");
+		// 업로드 파일 완료 처리
+		String gid = boardConfig.getGid();
+		fileInfoDao.updateDone(gid + "_topHtml");
+		fileInfoDao.updateDone(gid + "_bottomHtml");
 		
 	}
 	

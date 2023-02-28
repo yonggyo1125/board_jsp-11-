@@ -7,8 +7,10 @@ window.addEventListener("DOMContentLoaded", function() {
 });
 
 async function updateFileList() {
-	const topFiles = await koreait.fileManager.gets("config_topHtml");
-	const bottomFiles = await koreait.fileManager.gets("config_bottomHtml");
+	const gid = document.querySelector("input[name='gid']").value;
+	
+	const topFiles = await koreait.fileManager.gets(`${gid}_topHtml`);
+	const bottomFiles = await koreait.fileManager.gets(`${gid}_bottomHtml`);
 	const files = [...topFiles, ...bottomFiles];
 	
 	const fileTpl = document.getElementById("fileTpl").innerHTML;

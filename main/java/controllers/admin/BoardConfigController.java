@@ -34,11 +34,12 @@ public class BoardConfigController extends HttpServlet {
 		String patternStr = "board/config/([^\\?]*)";
 		Pattern pattern = Pattern.compile(patternStr);
 		Matcher matcher = pattern.matcher(requestURI);
+		BoardConfig  boardConfig = null;
 		if (matcher.find()) {
 			String id = matcher.group(1);
 			if (id != null && !id.isBlank()) { // 게시판 아이디가 있는경우 수정, 없는 경우는 추가
 				try {
-					BoardConfig boardConfig = BoardServiceManager.getInstance()
+					boardConfig = BoardServiceManager.getInstance()
 																		.getBoardConfigInfoService().get(id);
 					
 					req.setAttribute("boardConfig", boardConfig);
@@ -49,6 +50,10 @@ public class BoardConfigController extends HttpServlet {
 				}
 			}
 		}
+		
+
+		req.setAttribute("gid", boardConfig == null ? System.currentTimeMillis() : boardConfig.getGid()); 
+		
 		
 		RequestDispatcher rd = req.getRequestDispatcher("/admin/board/config.jsp");
 		rd.forward(req, resp);

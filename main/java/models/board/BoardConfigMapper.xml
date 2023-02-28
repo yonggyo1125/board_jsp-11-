@@ -3,6 +3,7 @@
 <mapper namespace="BoardConfigMapper">
 	<resultMap id="boardConfigMap" type="models.board.BoardConfig">
 		<result property="id" column="id" />
+		<result property="gid" column="gid" />
 		<result property="boardNm" column="boardNm" />
 		<result property="isUse" column="isUse" />
 		<result property="useEditor" column="useEditor" />
@@ -39,8 +40,8 @@
 	
 	<insert id="insert" parameterType="models.board.BoardConfig">
 		INSERT INTO boardConfig 
-			(id, boardNm, isUse, useEditor, attachFileType, postsPerPage, pageRanges, useComment, topHtml, bottomHtml)
-			VALUES (#{id}, #{boardNm}, #{isUse}, #{useEditor}, #{attachFileType}, #{postsPerPage}, #{pageRanges}, #{useComment}, #{topHtml}, #{bottomHtml});
+			(id, gid, boardNm, isUse, useEditor, attachFileType, postsPerPage, pageRanges, useComment, topHtml, bottomHtml)
+			VALUES (#{id}, #{gid}, #{boardNm}, #{isUse}, #{useEditor}, #{attachFileType}, #{postsPerPage}, #{pageRanges}, #{useComment}, #{topHtml}, #{bottomHtml});
 	</insert>
 	
 	<update id="update" parameterType="models.board.BoardConfig">
