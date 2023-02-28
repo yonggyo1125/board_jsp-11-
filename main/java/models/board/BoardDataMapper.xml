@@ -36,19 +36,32 @@
 						CONCAT(m.userNm, b.poster) LIKE #{userNm} AND 
 					</if>
 				</trim>
-				
 				ORDER BY b.regDt DESC 
 				<if test="limit > 0">
 				LIMIT #{offset}, #{limit}
 				</if> 		
 	</select>
-	<select id="get">
-	
+	<select id="get" parameterType="models.board.BoardData" resultMap="boardDataMap">
+		SELECT b.*, m.userId, m.userNm FROM boardData b 
+														LEFT JOIN member m ON b.userNo = m.userNo 
+											WHERE b.id=#{id};
 	</select>
 	
-	<insert id="insert"></insert>
-	<update id="update"></update>
-	<delete id="delete"></delete>
-	
+	<insert id="insert" parameterType="models.board.BoardData" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO boardData (gid, boardId, userNo, poster, subject, content, hit)
+			VALUES (#{gid}, #{boardId}, #{userNo}, #{poster}, #{subject}, #{content}, #{hit});
+	</insert>
+	<update id="update" parameterType="models.board.BoardData">
+		UPDATE boardData
+			SET 
+				poster=#{poster},
+				subject=#{subject},
+				content=#{content},
+				modDt=NOW()
+		WHERE id=#{id};
+	</update>
+	<delete id="delete" parameterType="models.board.BoardData">
+		DELETE FROM boardData WHERE id=#{id};
+	</delete>
 </mapper>
 
