@@ -6,14 +6,21 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 
 import commons.validator.Validator;
+import models.file.FileInfoDao;
 
 public class BoardConfigSaveService {
 	private BoardConfigDao boardConfigDao;
 	private Validator<BoardConfig> validator;
 	
+	private FileInfoDao fileInfoDao;
+	
 	public BoardConfigSaveService(BoardConfigDao boardConfigDao, Validator<BoardConfig> validator) {
 		this.boardConfigDao = boardConfigDao;
 		this.validator = validator;
+	}
+	
+	public void setFileInfoDao(FileInfoDao fileInfoDao) {
+		this.fileInfoDao = fileInfoDao;
 	}
 	
 	public void save(HttpServletRequest request) {
@@ -66,6 +73,9 @@ public class BoardConfigSaveService {
 		if (!result) {
 			throw new BoardConfigException("설정 정보 저장에 실패하였습니다.");
 		}
+		
+		// 업로드 파일 완료 처리 
+		
 	}
 	
 }

@@ -81,5 +81,19 @@ public class FileInfoDao {
 		
 		return cnt > 0;
 	}
-	 
+	
+	// 파일과 연관된 작업이 완료된 경우 완료처리 
+	public void updateDone(String gid) {
+		FileInfo params = new FileInfo();
+		params.setGid(gid);
+		
+		qe.update(params, "FileInfoMapper.done");
+	}
+	
+	public void updateDone(int id) {
+		FileInfo params = new FileInfo();
+		params.setId(id);
+		
+		qe.update(params, "FileInfoMapper.done");
+	}
 }
