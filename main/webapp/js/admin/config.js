@@ -1,7 +1,39 @@
 window.addEventListener("DOMContentLoaded", function() {
 	CKEDITOR.replace("boardTopHtml");
 	CKEDITOR.replace("boardBottomHtml");
+	
+	/** 상단, 하단 에디터 업로드 파일 목록  */
+	updateFileList();
 });
+
+async function updateFileList() {
+	const topFiles = await koreait.fileManager.gets("config_topHtml");
+	const bottomFiles = await koreait.fileManager.gets("config_bottomHtml");
+	const files = [...topFiles, ...bottomFiles];
+	
+	const fileTpl = document.getElementById("fileTpl").innerHTML;
+	const contextPathEl = document.getElementById("contextPath");
+	const contextPath = contextPathEl?contextPathEl.value:"";
+	const domParser = new DOMParser();
+	const topEl = document.getElementById("uploaded_files_top");
+	const bottomEl = document.getElementById("uploaded_files_bottom");
+	for (const file of files) {
+		let html = fileTpl;
+		html = html.replace(/#downloadUrl#/g, `${contextPath}/file/download/${file.id}`)
+						.replace(/#fileName#/g, file.fileName)
+						.replace(/#id#/g, file.id);
+		const dom = domParser.parseFromString(html, "text/html");
+		const liEl = dom.querySelector("li");
+		const removeEl = liEl.querySelector(".remove");
+		removeEl.addEventListener("click", koreait.fileManager.delete);
+		
+		if (file.gid.indexOf("bottomHtml") != -1) { // 하단 
+			bottomEl.appendChild(liEl);
+		} else { // 상단
+			topEl.appendChild(liEl);
+		}
+	}
+}
 
 // 파일 업로드 후 후속처리
 function callbackFileUpload(files) {

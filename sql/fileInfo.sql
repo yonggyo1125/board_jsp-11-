@@ -9,8 +9,4 @@ CREATE TABLE fileInfo (
 
 ALTER TABLE fileInfo ADD userNo INT AFTER id;
 
-ALTER TABLE fileInfo ADD FOREIGN KEY(userNo)
-	REFERENCES member(userNo);
-	
-	
-ALTER TABLE fileInfo DROP CONSTRAINT fileinfo_ibfk_1;
+ALTER TABLE fileInfo ADD done TINYINT(1) DEFAULT 0 AFTER fileType;
