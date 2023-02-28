@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BoardDataMapper">
+	<resultMap id="boardDataMap" type="models.board.BoardData">
+		<result property="id" column="id" />
+		<result property="gid" column="gid" />
+		<result property="boardId" column="boardId" />
+		<result property="userNo" column="userNo" />
+		<result property="userId" column="userId" />
+		<result property="userNm" column="userNm" />
+		<result property="poster" column="poster" />
+		<result property="subject" column="subject" />
+		<result property="content" column="content" />
+		<result property="hit" column="hit" />
+		<result property="regDt" column="regDt" />
+		<result property="modDt" column="modDt" />		
+	</resultMap>
+	
+	<select id="gets" parameterType="models.board.BoardData" resultMap="boardDataMap">
+		SELECT b.*, m.userId, m.userNm FROM boardData b 
+						LEFT JOIN member m ON b.userNo = m.userNo
+				<trim prefix="WHERE" suffixOverrides="AND | OR">
+					<if test="boardId != null">
+						b.boardId=#{boardId} AND 
+					</if>
+					<if test="subject != null">
+						b.subject LIKE #{subject} AND 
+					</if>
+					<if test="content != null">
+						b.content LIKE #{content} AND 
+					</if>
+					<if test="userId != null">
+						m.userId LIKE #{userId} AND 
+					</if>
+					<if test="userNm != null">
+						CONCAT(m.userNm, b.poster) LIKE #{userNm} AND 
+					</if>
+				</trim>
+				
+				ORDER BY b.regDt DESC 
+				<if test="limit > 0">
+				LIMIT #{offset}, #{limit}
+				</if> 		
+	</select>
+	<select id="get">
+	
+	</select>
+	
+	<insert id="insert"></insert>
+	<update id="update"></update>
+	<delete id="delete"></delete>
+	
+</mapper>
+
