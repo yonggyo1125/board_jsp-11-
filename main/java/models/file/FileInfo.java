@@ -11,6 +11,7 @@ public class FileInfo {
 	private String gid; // 그룹 ID
 	private String fileName; // 원본 파일명
 	private String fileType; // 파일 종류
+	private int done; // 0 - 미완료, 1 - 완료
 	private LocalDateTime regDt; // 파일 업로드 일시 
 	
 	private String uploadUrl; // 파일 업로드 URL;
