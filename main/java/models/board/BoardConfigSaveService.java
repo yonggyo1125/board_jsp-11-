@@ -75,6 +75,8 @@ public class BoardConfigSaveService {
 		}
 		
 		// 업로드 파일 완료 처리 
+		fileInfoDao.updateDone("config_topHtml");
+		fileInfoDao.updateDone("config_bottomHtml");
 		
 	}
 	

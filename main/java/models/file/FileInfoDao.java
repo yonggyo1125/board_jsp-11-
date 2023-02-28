@@ -21,6 +21,8 @@ public class FileInfoDao {
 	public List<FileInfo> gets(String gid) {
 		FileInfo params = new FileInfo();
 		params.setGid(gid);
+		params.setDone(1);
+		
 		List<FileInfo> files = qe.query(params, "FileInfoMapper.files");
 		
 		return files;

@@ -70,7 +70,15 @@ public class FileInfo {
 		String url = "/uploads/" + folder + "/" + id;
 		return url;
 	}
-	
+
+	public int getDone() {
+		return done;
+	}
+
+	public void setDone(int done) {
+		this.done = done;
+	}
+
 	/**
 	 * 실제 업로드된 파일 경로 
 	 * 

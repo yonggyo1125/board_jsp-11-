@@ -43,10 +43,10 @@
 			SET done = 1 
 			<trim prefix="WHERE" suffixOverrides="AND | OR">
 				<if test="id != null">
-					id=#{id} AND 
+					id=#{id} OR 
 				</if>
 				<if test="gid != null">
-					gid=#{gid} AND
+					gid=#{gid} OR
 				</if>
 			</trim>
 	</update>
