@@ -12,3 +12,7 @@ CREATE TABLE boardConfig (
     regDt DATETIME DEFAULT NOW(),
     modDt DATETIME
 );
+
+
+ALTER TABLE boardConfig ADD gid VARCHAR(35) AFTER id;
+CREATE INDEX ix_gid ON boardConfig(gid);

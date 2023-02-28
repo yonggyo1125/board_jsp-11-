@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
  */
 public class BoardConfig {
 	private String id;  // 게시판 ID
+	private String gid; //  그룹 ID 
 	private String boardNm; // 게시판 이름
 	private int isUse; // 사용 여부
 	private int useEditor; // 위지윅 에디터 사용여부
@@ -28,6 +29,18 @@ public class BoardConfig {
 		this.id = id;
 	}
 	
+	public String getGid() {
+		if (gid == null) {
+			gid = "" + System.currentTimeMillis();
+		}
+		
+		return gid;
+	}
+
+	public void setGid(String gid) {
+		this.gid = gid;
+	}
+
 	public String getBoardNm() {
 		return boardNm;
 	}
